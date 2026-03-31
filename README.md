@@ -90,6 +90,11 @@ This brings up:
 3. Missing critical-tagged flow coverage.
 4. Missing expected artifacts.
 
+## Cypress Env Migration
+
+- `Cypress.env()` migration guide: `docs/cypress-env-migration.md`
+- This repo enforces `allowCypressEnv: false` and uses `expose` for public tag configuration.
+
 ## Security & Maintainability Notes
 
 - Secrets managed only in CI secret store.
