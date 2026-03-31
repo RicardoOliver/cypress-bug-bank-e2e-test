@@ -18,7 +18,7 @@
     "k6:spike": "k6 run --summary-export=artifacts/k6-spike-summary.json k6/spike.js"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=24"
   },
   "devDependencies": {
     "@types/node": "^24.5.2",
