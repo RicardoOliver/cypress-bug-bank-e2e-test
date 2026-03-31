@@ -22,7 +22,7 @@ export default defineConfig({
     criticalFlowCoverageThreshold: 1
   },
   e2e: {
-    baseUrl: process.env.BASE_URL || 'http://localhost:3000',
+    baseUrl: process.env.BASE_URL || 'https://bugbank.netlify.app',
     specPattern: 'cypress/e2e/**/*.cy.ts',
     supportFile: 'cypress/support/e2e.ts',
     setupNodeEvents(on, config) {
