@@ -26,7 +26,7 @@ export default defineConfig({
     specPattern: 'cypress/e2e/**/*.cy.ts',
     supportFile: 'cypress/support/e2e.ts',
     setupNodeEvents(on, config) {
-      require('cypress-grep/src/plugin')(config);
+      require('@cypress/grep/src/plugin')(config);
       on('task', {
         log(message: string) {
           // observability-friendly structured log hook
