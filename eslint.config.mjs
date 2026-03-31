@@ -1,23 +1,32 @@
 import js from '@eslint/js';
-import cypress from 'eslint-plugin-cypress';
+
+const commonNodeGlobals = {
+  require: 'readonly',
+  module: 'readonly',
+  __dirname: 'readonly',
+  process: 'readonly',
+  console: 'readonly'
+};
 
 export default [
   js.configs.recommended,
   {
-    files: ['cypress/**/*.ts'],
-    plugins: { cypress },
+    files: ['app/**/*.js'],
+    languageOptions: {
+      sourceType: 'commonjs',
+      globals: {
+        ...commonNodeGlobals,
+        fetch: 'readonly'
+      }
+    }
+  },
+  {
+    files: ['k6/**/*.js'],
     languageOptions: {
       globals: {
-        cy: 'readonly',
-        Cypress: 'readonly',
-        describe: 'readonly',
-        it: 'readonly',
-        beforeEach: 'readonly',
-        expect: 'readonly'
+        __ENV: 'readonly',
+        console: 'readonly'
       }
-    },
-    rules: {
-      'no-console': 'off'
     }
   }
 ];

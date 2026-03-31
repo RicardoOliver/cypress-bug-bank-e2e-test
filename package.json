@@ -4,7 +4,7 @@
   "private": true,
   "description": "Enterprise-grade Cypress + k6 automation platform",
   "scripts": {
-    "lint": "eslint . --ext .ts,.js",
+    "lint": "eslint . --ext .js",
     "typecheck": "tsc --noEmit",
     "test:unit": "node --test app/**/*.test.js",
     "cy:open": "cypress open",
