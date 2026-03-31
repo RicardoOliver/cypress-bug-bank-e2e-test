@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+  <head><meta charset="UTF-8"><title>Dashboard</title></head>
+  <body>
+    <h2>Orders</h2>
+    <input data-cy="order-amount" type="number" min="1" max="10000" />
+    <input data-cy="order-reference" />
+    <button data-cy="create-order" onclick="createOrder()">Create Order</button>
+    <button data-cy="checkout" onclick="checkout()">Checkout</button>
+    <p data-cy="checkout-status"></p>
+    <script>
+      async function createOrder() {
+        const amount = Number(document.querySelector('[data-cy=order-amount]').value);
+        const reference = document.querySelector('[data-cy=order-reference]').value;
+        await fetch('/api/orders', {
+          method: 'POST', headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({ amount, reference })
+        });
+      }
+      function checkout() {
+        document.querySelector('[data-cy=checkout-status]').textContent = 'SUCCESS';
+      }
+    </script>
+  </body>
+</html>

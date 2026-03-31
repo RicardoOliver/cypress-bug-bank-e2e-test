@@ -1,0 +1,10 @@
+{
+  "title": "k6 Performance Overview",
+  "panels": [
+    {"type": "graph", "title": "Response Time p95", "targets": [{"query": "SELECT percentile(\"value\",95) FROM \"http_req_duration\" WHERE $timeFilter"}]},
+    {"type": "graph", "title": "Error Rate", "targets": [{"query": "SELECT mean(\"value\") FROM \"http_req_failed\" WHERE $timeFilter"}]},
+    {"type": "graph", "title": "Throughput", "targets": [{"query": "SELECT sum(\"value\") FROM \"http_reqs\" WHERE $timeFilter GROUP BY time($__interval)"}]}
+  ],
+  "schemaVersion": 16,
+  "version": 1
+}
