@@ -15,11 +15,13 @@ export default defineConfig({
     mochaFile: 'artifacts/cypress/results/junit-[hash].xml',
     toConsole: true
   },
-  env: {
-    grepFilterSpecs: true,
-    grepOmitFiltered: true,
+  expose: {
     failOnCoverageGap: true,
     criticalFlowCoverageThreshold: 1
+  },
+  env: {
+    grepFilterSpecs: true,
+    grepOmitFiltered: true
   },
   e2e: {
     baseUrl: process.env.BASE_URL || 'https://bugbank.netlify.app',
@@ -27,6 +29,12 @@ export default defineConfig({
     supportFile: 'cypress/support/e2e.ts',
     setupNodeEvents(on, config) {
       require('@cypress/grep/src/plugin')(config);
+
+      const exposedValues = config.expose as { grepTags?: string } | undefined;
+      if (exposedValues?.grepTags && !config.env.grepTags) {
+        config.env.grepTags = exposedValues.grepTags;
+      }
+
       on('task', {
         log(message: string) {
           // observability-friendly structured log hook
