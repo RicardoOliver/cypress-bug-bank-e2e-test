@@ -1,0 +1,36 @@
+{
+  "name": "cypress-bug-bank-e2e-test",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Enterprise-grade Cypress + k6 automation platform",
+  "scripts": {
+    "lint": "eslint . --ext .ts,.js",
+    "typecheck": "tsc --noEmit",
+    "test:unit": "node --test app/**/*.test.js",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "cy:run:smoke": "cypress run --env grepTags=@smoke --record false",
+    "cy:run:critical": "cypress run --env grepTags=@critical --record false",
+    "cy:cloud": "cypress run --record --parallel --group e2e-chrome",
+    "quality:gates": "bash ci/quality-gates.sh",
+    "k6:load": "k6 run --summary-export=artifacts/k6-load-summary.json k6/load.js",
+    "k6:stress": "k6 run --summary-export=artifacts/k6-stress-summary.json k6/stress.js",
+    "k6:spike": "k6 run --summary-export=artifacts/k6-spike-summary.json k6/spike.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@types/node": "^24.5.2",
+    "cypress": "15.12.0",
+    "cypress-grep": "^3.0.4",
+    "eslint": "^9.35.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-cypress": "^5.1.1",
+    "typescript": "^5.9.2",
+    "@eslint/js": "^9.35.0"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

@@ -1,0 +1,66 @@
+name: enterprise-quality-gates
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 3 * * *'
+
+jobs:
+  quality-pipeline:
+    runs-on: ubuntu-latest
+    env:
+      BASE_URL: http://localhost:3000
+      CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+      GRAFANA_CLOUD_PUSH_TOKEN: ${{ secrets.GRAFANA_CLOUD_PUSH_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint + Static Analysis
+        run: npm run lint && npm run typecheck
+
+      - name: Unit tests
+        run: npm run test:unit
+
+      - name: Start app
+        run: node app/index.js &
+
+      - name: Cypress smoke on PR / full on main
+        run: |
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            npm run cy:run:smoke
+          else
+            npm run cy:cloud
+          fi
+
+      - name: k6 load
+        uses: grafana/setup-k6-action@v1
+      - run: npm run k6:load
+
+      - name: k6 stress
+        run: npm run k6:stress
+
+      - name: k6 spike
+        run: npm run k6:spike
+
+      - name: Quality gates
+        run: npm run quality:gates
+
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qa-artifacts
+          path: artifacts
+
+      - name: Deploy (gated)
+        if: github.ref == 'refs/heads/main' && success()
+        run: echo "Deploy stage placeholder - all gates passed"

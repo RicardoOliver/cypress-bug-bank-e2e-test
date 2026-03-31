@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+  <head><meta charset="UTF-8"><title>Bug Bank</title></head>
+  <body>
+    <h1>Bug Bank Portal</h1>
+    <input data-cy="username" placeholder="username" />
+    <input data-cy="password" placeholder="password" type="password" />
+    <button data-cy="login-submit" onclick="login()">Login</button>
+    <p data-cy="auth-error"></p>
+    <p data-cy="welcome"></p>
+    <a href="/dashboard.html">Dashboard</a>
+    <script>
+      async function login() {
+        const username = document.querySelector('[data-cy=username]').value;
+        const password = document.querySelector('[data-cy=password]').value;
+        const r = await fetch('/api/login', {
+          method: 'POST', headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({ username, password })
+        });
+        const body = await r.json();
+        if (!r.ok) {
+          document.querySelector('[data-cy=auth-error]').textContent = body.error;
+          return;
+        }
+        localStorage.setItem('session_token', body.token);
+        document.querySelector('[data-cy=welcome]').textContent = `Welcome ${body.username}`;
+      }
+    </script>
+  </body>
+</html>

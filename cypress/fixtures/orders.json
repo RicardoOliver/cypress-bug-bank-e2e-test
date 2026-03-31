@@ -1,0 +1,14 @@
+{
+  "standardOrder": {
+    "amount": 100,
+    "reference": "ORDER-100"
+  },
+  "boundaryMinOrder": {
+    "amount": 1,
+    "reference": "ORDER-MIN"
+  },
+  "boundaryMaxOrder": {
+    "amount": 10000,
+    "reference": "ORDER-MAX"
+  }
+}

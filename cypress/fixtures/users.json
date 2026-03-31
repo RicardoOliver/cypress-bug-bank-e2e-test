@@ -1,0 +1,14 @@
+{
+  "validUser": {
+    "username": "qa_user",
+    "password": "Password123!"
+  },
+  "invalidUser": {
+    "username": "qa_user",
+    "password": "wrong-password"
+  },
+  "unauthorizedUser": {
+    "username": "blocked_user",
+    "password": "Password123!"
+  }
+}
