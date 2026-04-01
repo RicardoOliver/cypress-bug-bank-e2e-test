@@ -21,16 +21,16 @@
     "node": ">=26"
   },
   "devDependencies": {
-    "@types/node": "^26.0.0",
+    "@types/node": "^25.5.0",
     "cypress": "15.13.0",
-    "eslint": "^9.35.0",
+    "eslint": "^10.1.0",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-cypress": "^5.1.1",
-    "typescript": "^5.9.2",
-    "@eslint/js": "^9.35.0",
-    "@cypress/grep": "^4.0.4"
+    "eslint-plugin-cypress": "^6.2.1",
+    "typescript": "^6.0.2",
+    "@eslint/js": "^10.0.1",
+    "@cypress/grep": "^6.0.0"
   },
   "dependencies": {
-    "express": "^4.21.2"
+    "express": "^5.2.1"
   }
 }
