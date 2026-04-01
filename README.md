@@ -1,9 +1,9 @@
-# Plataforma de Automação Cypress Corporativa
+Automação Cypress Corporativa
 
-Plataforma de automação de testes de nível de produção, projetada com padrões de engenharia de Big Techs:
+Plataforma de automação de testes de nível de produção, projetada com padrões de projetos.
 
-- **Cypress v16.5.0** com TypeScript e arquitetura modular.
-- **Node.js v26.x** (versão de produção de 2026).
+- **Cypress v15.x.0** com TypeScript e arquitetura modular.
+- **Node.js v25.x** (versão de produção de 2026).
 - **Padrão Application Actions** (fluxos de trabalho do usuário em nível de negócio).
 - **Padrão Fixture Data** + suporte a fábricas (factories) dinâmicas.
 - **Reprodutibilidade via Docker** para execução local e em CI.
