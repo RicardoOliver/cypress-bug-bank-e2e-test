@@ -1,18 +1,17 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "lib": ["ES2022", "DOM"],
     "types": ["cypress", "node"],
     "strict": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "baseUrl": ".",
     "paths": {
-      "@actions/*": ["cypress/actions/*"],
-      "@utils/*": ["cypress/utils/*"]
+      "@actions/*": ["./cypress/actions/*"],
+      "@utils/*": ["./cypress/utils/*"]
     }
   },
   "include": ["cypress/**/*.ts", "cypress.config.ts"]
