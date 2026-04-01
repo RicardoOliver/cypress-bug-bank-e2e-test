@@ -21,14 +21,14 @@
     "node": ">=26"
   },
   "devDependencies": {
+    "@cypress/grep": "^6.0.0",
+    "@eslint/js": "^10.0.1",
     "@types/node": "^25.5.0",
     "cypress": "15.13.0",
     "eslint": "^10.1.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-cypress": "^6.2.1",
-    "typescript": "^6.0.2",
-    "@eslint/js": "^10.0.1",
-    "@cypress/grep": "^6.0.0"
+    "typescript": "^6.0.2"
   },
   "dependencies": {
     "express": "^5.2.1"

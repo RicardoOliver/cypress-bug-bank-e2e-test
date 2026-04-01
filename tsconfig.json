@@ -3,15 +3,16 @@
     "target": "ES2022",
     "module": "CommonJS",
     "lib": ["ES2022", "DOM"],
-    "types": ["cypress", "node", "@cypress/grep"],
+    "types": ["cypress", "node"],
     "strict": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
+    "isolatedModules": true,
     "baseUrl": ".",
     "paths": {
-      "@actions/*": ["cypress/actions/*"],
-      "@utils/*": ["cypress/utils/*"]
+      "@actions/*": ["./cypress/actions/*"],
+      "@utils/*": ["./cypress/utils/*"]
     }
   },
   "include": ["cypress/**/*.ts", "cypress.config.ts"]
