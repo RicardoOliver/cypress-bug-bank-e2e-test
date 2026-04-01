@@ -1,25 +1,25 @@
-import { loginUser } from '@actions/auth.actions';
-import { checkoutFlow, createOrder } from '@actions/order.actions';
-import { buildOrderData } from '@utils/dataFactory';
+import { registerAndLogin } from '../../actions/auth.actions';
+import { makeTransfer } from '../../actions/transfer.actions';
+import { dataFactory } from '../../utils/dataFactory';
 
-describe('Checkout Regression', { tags: ['@regression', '@critical'] }, () => {
+describe('Regressão de Transferência', { tags: ['@regression', '@critical'] }, () => {
   beforeEach(() => {
-    cy.fixture('users').then(({ validUser }) => {
-      loginUser(validUser.username, validUser.password);
-    });
+    // Para testes de regressão, iniciamos com um novo usuário com saldo
+    registerAndLogin(true);
   });
 
-  it('completes checkout for a standard order', () => {
-    const order = buildOrderData();
-    createOrder(order.amount, order.reference);
-    checkoutFlow();
+  it('deve completar uma transferência padrão entre contas', () => {
+    const dadosTransferencia = dataFactory.generateTransfer({ account: '123', digit: '4', amount: '100' });
+    makeTransfer(dadosTransferencia.account, dadosTransferencia.digit, dadosTransferencia.amount, dadosTransferencia.description);
+    cy.contains(/sucesso/i).should('be.visible');
   });
 
-  it('supports boundary order amounts', () => {
+  it('deve suportar transferências com valores de limite (boundary)', () => {
     cy.fixture('orders').then(({ boundaryMinOrder, boundaryMaxOrder }) => {
-      [boundaryMinOrder, boundaryMaxOrder].forEach((order) => {
-        createOrder(order.amount, order.reference);
-        checkoutFlow();
+      [boundaryMinOrder, boundaryMaxOrder].forEach((ordem) => {
+        // Realiza transferências baseadas nos limites definidos na fixture
+        makeTransfer('123', '4', ordem.amount.toString(), `Regressão: ${ordem.reference}`);
+        cy.get('[data-testid="btn-close-modal"]').click();
       });
     });
   });

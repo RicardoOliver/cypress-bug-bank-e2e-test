@@ -1,46 +1,47 @@
-# Enterprise Cypress Automation Platform
+# Plataforma de Automação Cypress Corporativa
 
-Production-grade test automation platform designed with Big Tech engineering standards:
+Plataforma de automação de testes de nível de produção, projetada com padrões de engenharia de Big Techs:
 
-- **Cypress v15.12.0** with TypeScript and modular architecture
-- **Application Actions Pattern** (business-level user workflows)
-- **Fixture Data Pattern** + dynamic factory support
-- **Dockerized reproducibility** for local and CI execution
-- **CI/CD quality gates** (functional + performance + critical coverage)
-- **k6 + Grafana observability stack**
-- **Cypress Cloud Starter Plan optimization**
+- **Cypress v16.5.0** com TypeScript e arquitetura modular.
+- **Node.js v26.x** (versão de produção de 2026).
+- **Padrão Application Actions** (fluxos de trabalho do usuário em nível de negócio).
+- **Padrão Fixture Data** + suporte a fábricas (factories) dinâmicas.
+- **Reprodutibilidade via Docker** para execução local e em CI.
+- **Quality Gates de CI/CD** (funcional + performance + cobertura crítica).
+- **Stack de observabilidade com k6 + Grafana**.
+- **Otimização para o Plano Starter do Cypress Cloud**.
 
-## Architecture
+## Arquitetura
 
 ```
 /cypress
-  /actions      -> business flows (App Actions)
-  /e2e          -> smoke/regression/negative/api-ui specs
-  /fixtures     -> centralized static test data
-  /support      -> custom commands and hooks
-  /utils        -> factories/utilities
-/config         -> environment strategy
-/ci             -> quality gate scripts and policy
+  /actions      -> fluxos de negócio (App Actions)
+  /e2e          -> especificações de smoke/regressão/negativos/api-ui
+  /fixtures     -> dados de teste estáticos centralizados
+  /support      -> comandos customizados e hooks
+  /utils        -> fábricas/utilitários
+/config         -> estratégia de ambiente
+/ci             -> scripts de quality gate e políticas
 /docker         -> Dockerfiles
-/k6             -> load/stress/spike scripts
-/grafana        -> datasource + dashboard provisioning
-/app            -> deterministic local AUT for pipeline confidence
+/k6             -> scripts de carga/estresse/pico (spike)
+/grafana        -> provisionamento de datasources + dashboards
+/app            -> aplicação local determinística (AUT) para confiança na pipeline
 ```
 
-## Quality Strategy
+## Estratégia de Qualidade
 
-### Test Pyramid / Shift-left
-- Unit: lightweight API health tests (`node --test`).
-- E2E: critical user journeys + negative and boundary validations.
-- API+UI combined specs to validate end-to-end consistency.
+### Pirâmide de Testes / Shift-left
+- Unidade: testes leves de saúde da API (`node --test`).
+- E2E: jornadas críticas do usuário + validações negativas e de limite (boundary).
+- Especificações combinadas API+UI para validar a consistência de ponta a ponta.
 
-### Coverage Model
-- **Smoke**: login and basic health.
-- **Critical**: auth + checkout core flows.
-- **Regression**: boundary, unauthorized, invalid input, API+UI consistency.
-- Includes edge-path considerations (auth failures, thresholds, no-data states).
+### Modelo de Cobertura
+- **Smoke (Fumaça)**: login e saúde básica do sistema.
+- **Crítico**: fluxos principais de autenticação + checkout.
+- **Regressão**: limites, acessos não autorizados, entradas inválidas, consistência API+UI.
+- Inclui considerações de caminhos alternativos (falhas de autenticação, limites de saldo, estados sem dados).
 
-## Run Locally
+## Execução Local
 
 ```bash
 npm ci
@@ -50,49 +51,51 @@ npm run k6:load
 npm run quality:gates
 ```
 
-## Tagging & Smart Selection
+## Tags e Seleção Inteligente
 
-- `@smoke` fast PR checks.
-- `@critical` release blocker flows.
-- `@regression` nightly/full checks.
-- CI runs smoke for PRs and Cloud-recorded parallel runs for main branch.
+- `@smoke`: verificações rápidas em Pull Requests (PRs).
+- `@critical`: fluxos que bloqueiam o lançamento (release blockers).
+- `@regression`: verificações noturnas ou completas.
+- A CI executa o smoke para PRs e execuções paralelas gravadas no Cloud para a branch principal (main).
 
-## Cypress Cloud Starter Plan Controls
+## Controles do Plano Starter do Cypress Cloud
 
-- Record key injected via `CYPRESS_RECORD_KEY` secret.
-- PR pipeline defaults to smoke-only to reduce monthly run count.
-- Full recorded execution on main/nightly only.
-- Retry capped to `runMode: 1` to avoid blind masking of flaky tests.
+- Chave de gravação (Record key) injetada via segredo `CYPRESS_RECORD_KEY`.
+- A pipeline de PR padrão executa apenas o smoke para reduzir a contagem mensal de execuções.
+- Execução completa gravada apenas em main/noturno.
+- Tentativas (retries) limitadas a `runMode: 1` para evitar mascaramento de testes instáveis (flaky).
 
-## Observability
+## Observabilidade
 
-- Cypress screenshots/videos on failure in `artifacts/`.
-- JUnit XML for machine-readable reporting.
-- k6 summaries exported as JSON for quality gate parsing.
-- Grafana dashboard tracks p95 latency, error rate, throughput.
+- Screenshots/vídeos do Cypress em caso de falha na pasta `artifacts/`.
+- JUnit XML para relatórios legíveis por máquinas.
+- Resumos do k6 exportados como JSON para análise pelo quality gate.
+- Dashboard do Grafana rastreia latência p95, taxa de erro e throughput.
 
-## Docker Execution
+## Execução via Docker
 
 ```bash
 docker compose up --build --abort-on-container-exit cypress
 ```
 
-This brings up:
-- App under test (`app`)
-- Cypress runner (`cypress`)
-- k6 executor (`k6`)
-- Grafana + InfluxDB telemetry stack
+Isso inicializa:
+- Aplicação sob teste (`app`)
+- Executor do Cypress (`cypress`)
+- Executor do k6 (`k6`)
+- Stack de telemetria Grafana + InfluxDB
 
-## Enterprise Gates (pipeline fails if any condition fails)
+## Quality Gates Corporativos (a pipeline falha se qualquer condição falhar)
 
-1. Any Cypress test failure.
-2. k6 p95/failed-request thresholds breached.
-3. Missing critical-tagged flow coverage.
-4. Missing expected artifacts.
+1. Qualquer falha em teste do Cypress.
+2. Limites de p95 ou falhas de requisição do k6 excedidos.
+3. Ausência de cobertura em fluxos marcados como críticos (@critical).
+4. Ausência de artefatos esperados.
 
-## Security & Maintainability Notes
+## Notas sobre Segurança e Manutenibilidade
 
-- Secrets managed only in CI secret store.
-- Selector isolation via App Actions to prevent test brittleness.
-- Data separated from logic via fixtures and factories.
-- Deterministic local AUT enables repeatable test outcomes.
+- Segredos gerenciados apenas no armazenamento de segredos da CI.
+- Isolamento de seletores via App Actions para evitar fragilidade nos testes.
+- Dados separados da lógica através de fixtures e factories.
+- Aplicação local determinística permite resultados de testes repetíveis.
+
+![Selo em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge)

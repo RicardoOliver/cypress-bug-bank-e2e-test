@@ -15,10 +15,10 @@ jobs:
       CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
       GRAFANA_CLOUD_PUSH_TOKEN: ${{ secrets.GRAFANA_CLOUD_PUSH_TOKEN }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
-          node-version: 24
+          node-version: 26
       - name: Install dependencies
         run: npm install
 

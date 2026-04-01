@@ -1,14 +1,52 @@
+
 {
   "validUser": {
-    "username": "qa_user",
-    "password": "Password123!"
+    "email": "fulano@qa.com",
+    "name": "Fulano de Tal",
+    "password": "Password123"
   },
-  "invalidUser": {
-    "username": "qa_user",
-    "password": "wrong-password"
+  "invalidPasswordUser": {
+    "email": "fulano@qa.com",
+    "password": "WrongPassword"
   },
-  "unauthorizedUser": {
-    "username": "blocked_user",
-    "password": "Password123!"
+  "nonExistentUser": {
+    "email": "naoexiste@qa.com",
+    "password": "anypassword"
+  },
+  "boundary": {
+    "name": {
+      "oneChar": "A",
+      "twoChars": "Ab",
+      "longName": "Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "tooLongName": "Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab"
+    },
+    "email": {
+      "tooShort": "a@b.c",
+      "tldTooShort": "a@b.co",
+      "maxLocalPart": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@domain.com",
+      "tooLongLocalPart": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@domain.com"
+    }
+  },
+  "malicious": {
+    "xss": {
+      "name": "<script>alert('XSS')</script>",
+      "email": "xss@qa.com",
+      "password": "Password123"
+    },
+    "sqlInjection": {
+      "name": "' OR '1'='1",
+      "email": "sqli@qa.com",
+      "password": "Password123"
+    }
+  },
+  "specialChars": {
+    "name": "João & Cia <'Brasil'>",
+    "email": "special.chars@qa.com",
+    "password": "Password123"
+  },
+  "whitespace": {
+    "name": "  Trim Me  ",
+    "email": "  trim.me@qa.com  ",
+    "password": "Password123"
   }
 }
